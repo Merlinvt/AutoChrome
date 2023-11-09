@@ -76,10 +76,8 @@ user_proxy.register_function(
 # start the conversation
 user_proxy.initiate_chat(
     chatbot,
-    message="open chrome in selenium from selenium import webdriver \
-from utils import (LoggingWebDriver,LoggingActionChains) \
-driver = initialize_webdriver()  \
-go to google.de",
+    message="open selenium with initialize_webdriver() \
+go to google.de, then go to zeit.de", 
 )
 
 autogen.ChatCompletion.stop_logging()

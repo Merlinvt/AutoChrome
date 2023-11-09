@@ -57,19 +57,17 @@ def initialize_webdriver(headless: bool = False) -> webdriver.Chrome:
     else:
         chrome_options.add_argument("--start-maximized")
 
+    chrome_options.debugger_address="localhost:9222"
     #if debugger_address:
     #chrome_options.add_experimental_option("debuggerAddress", debugger_address)
     #chrome_options.add_experimental_option("debuggerAddress", "localhost:9222")
 
     clear_selenium_commands_log()
 
-    service = Service(executable_path='/usr/bin/google-chrome')
-
-
     # Assuming the path to chromedriver is set in PATH
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    #driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(5)  # Wait for elements to load
+    #driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.implicitly_wait(1)  # Wait for elements to load
     return driver
 
 def google_search(driver: webdriver.Chrome, query: str) -> str:
