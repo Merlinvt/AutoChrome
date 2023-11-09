@@ -70,6 +70,9 @@ def initialize_webdriver(headless: bool = False) -> webdriver.Chrome:
     driver.implicitly_wait(1)  # Wait for elements to load
     return driver
 
+def _initialize_webdriver(headless: bool = False):
+    return 
+
 def google_search(driver: webdriver.Chrome, query: str) -> str:
     """Perform a Google search and return the results."""
     safe_string = urllib.parse.quote_plus(query)
@@ -204,3 +207,8 @@ def scroll(driver: webdriver.Chrome, direction: str) -> str:
     driver.execute_script(f"window.scrollBy(0, {window_height})")
 
     return describe_website(driver)
+
+def get_url(driver: webdriver.Chrome, url: str):
+    with open("selenium_commands.log", "a") as f:
+        f.write(f"Visited URL: {url}\n")
+    driver.get(url)

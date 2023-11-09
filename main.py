@@ -1,6 +1,6 @@
 import autogen
 import os
-from llm_config import selenium_functions
+#from llm_config import selenium_functions
 from functions import (
     initialize_webdriver,
     google_search,
@@ -10,7 +10,8 @@ from functions import (
     click_button_by_text,
     find_form_inputs,
     scroll,
-    exec_python
+    exec_python,
+    get_url
 )
 
 from utils import (
@@ -32,7 +33,7 @@ config_list = [
 ]
 
 llm_config = {
-    "functions": selenium_functions,
+    #"functions": selenium_functions,
     "config_list": config_list,
     "timeout": 120,
 }
@@ -57,6 +58,7 @@ def exec_sh(script):
     return user_proxy.execute_code_blocks([("sh", script)])
 
 # register the functions
+"""
 user_proxy.register_function(
     function_map={
         "python": exec_python,
@@ -69,14 +71,16 @@ user_proxy.register_function(
         "close_webdriver": close_webdriver,
         "click_button_by_text": click_button_by_text,
         "find_form_inputs": find_form_inputs,
-        "scroll": scroll
+        "scroll": scroll,
+        "get_url": get_url
     }
 )
+"""
 
 # start the conversation
 user_proxy.initiate_chat(
     chatbot,
-    message="open selenium with initialize_webdriver() \
+    message="open chrome with selenium on the debugging port 9222   \
 go to google.de, then go to zeit.de", 
 )
 

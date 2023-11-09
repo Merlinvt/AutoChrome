@@ -179,6 +179,26 @@ selenium_functions = [
                 },
                 "required": ["driver", "direction"]
             }
+        },
+        
+        {
+            "name": "get_url",
+            "description": "Navigates the WebDriver to a specified URL and logs the action.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "driver": {
+                        "type": "object",
+                        "description": "An instance of Chrome WebDriver."
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "The URL to navigate to."
+                    }
+                },
+                "required": ["driver", "url"]
+            }
         }
+
     ]
 
