@@ -41,7 +41,7 @@ def is_complete_sentence(text: str) -> bool:
     return re.search(r"[.!?]\s*$", text) is not None
 
 
-def get_all_text_elements(driver: webdriver.Chrome) -> List[str]:
+def get_all_text_elements(driver: LoggingWebDriver) -> List[str]:
     xpath = (
         "//*[not(self::script or self::style or"
         " self::noscript)][string-length(normalize-space(text())) > 0]"
@@ -57,7 +57,7 @@ def get_all_text_elements(driver: webdriver.Chrome) -> List[str]:
     return texts
 
 
-def find_interactable_elements(driver: webdriver.Chrome) -> List[str]:
+def find_interactable_elements(driver: LoggingWebDriver) -> List[str]:
     """Find all interactable elements on the page."""
     # Extract interactable components (buttons and links)
     buttons = driver.find_elements(By.XPATH, "//button")
@@ -89,7 +89,7 @@ def prettify_text(text: str, limit: Optional[int] = None) -> str:
     return text
 
 
-def element_completely_viewable(driver: webdriver.Chrome, elem: WebElement) -> bool:
+def element_completely_viewable(driver: LoggingWebDriver, elem: WebElement) -> bool:
     """Check if an element is completely viewable in the browser window."""
     elem_left_bound = elem.location.get("x")
     elem_top_bound = elem.location.get("y")
@@ -113,7 +113,7 @@ def element_completely_viewable(driver: webdriver.Chrome, elem: WebElement) -> b
     )
 
 
-def find_parent_element_text(elem: webdriver.Chrome, prettify: bool = True) -> str:
+def find_parent_element_text(elem: LoggingWebDriver, prettify: bool = True) -> str:
     """Find the text up to third order parent element."""
     parent_element_text = elem.text.strip()
     if parent_element_text:
@@ -141,7 +141,7 @@ def truncate_string_from_last_occurrence(string: str, character: str) -> str:
     else:
         return string
 
-def _get_google_search_results(driver: webdriver.Chrome) -> List[Dict[str, Any]]:
+def _get_google_search_results(driver: LoggingWebDriver) -> List[Dict[str, Any]]:
     """Scrape search results from Google."""
     results = []
     page_source = driver.page_source
@@ -161,7 +161,7 @@ def _get_google_search_results(driver: webdriver.Chrome) -> List[Dict[str, Any]]
                 })
     return results
 
-def _get_website_main_content(driver: webdriver.Chrome) -> str:
+def _get_website_main_content(driver: LoggingWebDriver) -> str:
     """Extract the main content from a website."""
     texts = get_all_text_elements(driver)
     pretty_texts = [prettify_text(text) for text in texts]
@@ -176,7 +176,7 @@ def _get_website_main_content(driver: webdriver.Chrome) -> str:
 
     return description
 
-def _get_interactable_elements(driver: webdriver.Chrome) -> str:
+def _get_interactable_elements(driver: LoggingWebDriver) -> str:
     """Extract interactable components (buttons and links) from a website."""
     interactable_elements = driver.find_elements(
         By.XPATH,
@@ -206,7 +206,7 @@ def _get_interactable_elements(driver: webdriver.Chrome) -> str:
 
     return interactable_output
 
-def _find_form_fields(driver: webdriver.Chrome, url: Optional[str] = None) -> str:
+def _find_form_fields(driver: LoggingWebDriver, url: Optional[str] = None) -> str:
     """Find form fields on a website."""
     if url and url != driver.current_url and url.startswith("http"):
         try:
