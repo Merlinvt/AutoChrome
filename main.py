@@ -1,6 +1,7 @@
 import autogen
 from agent import AutoChromeAgent
 import os
+from functions import functions_cfg
 
 # Load the API key from an environment variable
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -15,8 +16,10 @@ config_list = [
     }
 ]
 
+
+
 llm_config = {
-    #"functions": selenium_functions,
+    "functions": functions_cfg,
     "config_list": config_list,
     "timeout": 120,
 }
@@ -24,10 +27,28 @@ llm_config = {
 autogen.ChatCompletion.start_logging()
 chatbot = autogen.AssistantAgent(
     name="chatbot",
-    system_message="For coding tasks, only use the functions you have been provided with. Reply TERMINATE when the task is done.",
+    system_message="You need to choose which action to take to help a user do this task: {objective}. \
+        Your options are navigate, type, click, and done. Navigate should take you to the specified URL. \
+        Type and click take strings where if you want to click on an object, \
+        return the string with the yellow character sequence you want to click on, \
+        and to type just a string with the message you want to type. \
+        For clicks, please only respond with the 1-2 letter sequence in the yellow box, \
+        and if there are multiple valid options choose the one you think a user would select. \
+        For typing, please return a click to click on the box along with a type with the message to write. \
+        When the page seems satisfactory, return done as a key with no value. \
+        You must respond in JSON only with no other fluff or bad things will happen. \
+        The JSON keys must ONLY be one of navigate, type, or click. Do not return the JSON inside a code block.",
+
     llm_config=llm_config,
 )
 
+
+agent.register_function(
+    function_map={
+        "perform_action": self.perform_action,
+        "get_actions": self.get_actions,
+    }
+)
 
 user_proxy = AutoChromeAgent(
     name="user_proxy",
