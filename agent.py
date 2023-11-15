@@ -1,5 +1,7 @@
 import autogen
 
+from autogen
+
 from typing import Any, Dict, List, Optional
 
 import time
@@ -14,7 +16,7 @@ from vision import get_actions
 
 vimium_path = "./vimium-master"
 
-class AutoChromeAgent(autogen.AssistantAgent):
+class BrowsingAgent(AssistantAgent):
 
     def __init__(
         self,
@@ -32,7 +34,7 @@ class AutoChromeAgent(autogen.AssistantAgent):
         self.driver.navigate("https://www.google.com")
 
 
-    def next_action()
+    def next_action():
         time.sleep(1)
         print("Capturing the screen...")
         creenshot = self.driver.capture()

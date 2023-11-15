@@ -1,5 +1,5 @@
 import autogen
-from agent import AutoChromeAgent
+from agent import BrowsingAgent
 import os
 from functions import functions_cfg
 
@@ -25,7 +25,7 @@ llm_config = {
 }
 
 autogen.ChatCompletion.start_logging()
-chatbot = autogen.AssistantAgent(
+chatbot = BrowsingAgent(
     name="chatbot",
     system_message="You need to choose which action to take to help a user do this task: {objective}. \
         Your options are navigate, type, click, and done. Navigate should take you to the specified URL. \
@@ -45,8 +45,7 @@ chatbot = autogen.AssistantAgent(
 
 agent.register_function(
     function_map={
-        "perform_action": self.perform_action,
-        "get_actions": self.get_actions,
+        "next_action": self.next_action,
     }
 )
 
@@ -61,6 +60,5 @@ user_proxy = AutoChromeAgent(
 
 user_proxy.initiate_chat(
     chatbot,
-    message="open chrome with selenium on the debugging port 9222   \
-    go to google.de, then go to zeit.de don't clone it", 
+    message="go to zeit.de and click the first article"
 )
