@@ -2,7 +2,7 @@ functions_cfg = [
 
         {
             "name": "next_action",
-            "description": "",
+            "description": "operate webbrowser",
             "parameters": {
                 "type": "object",
                 "properties": {
